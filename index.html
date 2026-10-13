@@ -124,7 +124,7 @@ textarea.f{resize:vertical;min-height:120px}
 .dotsw i{width:10px;height:10px;border-radius:50%;background:var(--line);transition:width .2s,background .2s}
 .dotsw i.on{background:var(--pill);width:26px;border-radius:99px}
 .act{background:linear-gradient(135deg,var(--act-a),var(--act-b) 72%)}
-.sechead{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.sechead{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
 .tag2{background:var(--surface);border:1px solid var(--line);padding:4px 12px;border-radius:99px;font-size:.82rem;font-weight:700;white-space:nowrap}
 .pstrip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-top:14px}
 .pd{border:0;border-radius:99px;min-height:112px;padding:12px 0 10px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;background:var(--surface);color:var(--muted);font-weight:700;font-size:.74rem;box-shadow:inset 0 0 0 1.5px var(--line);position:relative;min-width:0}
@@ -245,8 +245,7 @@ textarea.f{resize:vertical;min-height:120px}
 @media (min-width:700px){.tabs{display:inline-flex;width:auto}.tab{padding:10px 18px;font-size:1rem}}
 .rk{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px;align-items:start}
 .calcard{scroll-margin-top:84px}
-.srb{display:flex;align-items:center;gap:12px;width:100%;padding:12px 16px;border:0;background:none;text-align:left;min-height:60px}
-.srb.sel{background:var(--accent-soft)}
+.srb{display:flex;align-items:center;gap:12px;flex:1 1 auto;min-width:0;padding:12px 16px;border:0;background:none;text-align:left;min-height:60px}
 .srb .who{flex:1 1 auto}
 .mini{width:64px;height:8px;border-radius:99px;background:var(--line);overflow:hidden;flex:none}
 .mini i{display:block;height:100%;background:var(--accent);border-radius:99px}
@@ -257,6 +256,40 @@ textarea.f{resize:vertical;min-height:120px}
 .det[open] summary{margin-bottom:12px}
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px;margin-bottom:16px}
 .srow .del{margin-left:auto}
+/* report (screen side) */
+.stu-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.stu-head .who{flex:1 1 140px;min-width:0}
+.stu-head h3{overflow-wrap:anywhere}
+.avatar.sm{width:48px;height:48px;font-size:1.1rem;margin:0;flex:none}
+.subh{font-size:1.05rem;margin:18px 0 6px}
+.sum.auto{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (min-width:560px){.sum.auto{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.pbr{display:grid;grid-template-columns:124px 1fr auto;align-items:center;gap:10px;padding:6px 0}
+.pbn{display:flex;align-items:baseline;gap:6px;min-width:0}
+.pbn b{font-size:.95rem}
+.pbn .ar{font-size:1.15rem}
+.pbr small{white-space:nowrap}
+.pbar{display:flex;height:10px;border-radius:99px;overflow:hidden;background:var(--line)}
+.pbar i{display:block;height:100%}
+.pbar i.j,.lg.j{background:var(--accent)}
+.pbar i.s,.lg.s{background:color-mix(in srgb,var(--accent) 40%,var(--surface))}
+.pbar i.b,.lg.b{background:var(--muted);opacity:.55}
+.lg.n{background:var(--line)}
+.lg{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:5px;vertical-align:-1px}
+.lgi{white-space:nowrap}
+.srli{display:flex;align-items:center;gap:6px;padding-right:12px}
+.srli.sel{background:var(--accent-soft)}
+.srli .ibtn.pr{width:40px;height:40px}
+.rbtn{margin-top:16px}
+/* print root: the report is built here only while printing */
+#print-root{display:none}
+@media print{
+  @page{size:A4;margin:12mm}
+  html,body{background:#fff!important;color:#000}
+  body>*:not(#print-root){display:none!important}
+  #print-root{display:block}
+  #print-root .rp{margin:0}
+}
 .empty{border:1.5px dashed var(--line);border-radius:var(--radius);padding:28px 18px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;background:var(--surface)}
 .empty h3{font-size:1.2rem}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -264,6 +297,85 @@ textarea.f{resize:vertical;min-height:120px}
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
 <body>
+<style id="rpt-css">
+.rp{--g:#0E7A5C;--g2:#0A5C45;--gd:#0C4536;--star:#F2C230;--accent:#0E7A5C;--surface:#fff;--ink:#12302A;--mut:#5B726B;--line:#D3DFD9;width:186mm;margin:0 auto;color:var(--ink);background:#fff;font:10pt/1.4 'Atkinson Hyperlegible',system-ui,'Segoe UI',Roboto,Arial,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact;box-sizing:border-box;break-after:page;page-break-after:always}
+.rp:last-child{break-after:auto;page-break-after:auto}
+.rp *{box-sizing:border-box}
+:where(.rp) p{margin:0}
+.rp small{color:inherit;font-size:inherit}
+.rp-pg{break-after:page;page-break-after:always}
+.rp-pg:last-child{break-after:auto;page-break-after:auto}
+.rp-bis{font-family:'Amiri','Noto Naskh Arabic',serif;font-size:14pt;text-align:center;color:#0C4536;margin:0 0 3mm;line-height:1.2}
+.rp-ban{display:flex;align-items:center;gap:4.5mm;padding:5mm 6mm;border-radius:4mm;color:#fff;background:linear-gradient(135deg,#14865F,#0A3D30)}
+.rp-mark{width:17mm;height:17mm;flex:none;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center}
+.rp-mark svg{width:11.5mm;height:11.5mm}
+.rp-ban h1{font:700 17pt/1.1 'Baloo 2','Trebuchet MS',system-ui,sans-serif;margin:0;color:#fff}
+.rp-ban p{margin:1mm 0 0;font-size:9.5pt;opacity:.92}
+.rp-per{margin-left:auto;text-align:right;flex:none}
+.rp-per small{display:block;font-size:7.5pt;letter-spacing:.08em;text-transform:uppercase;opacity:.8;color:#fff}
+.rp-per b{font:700 13pt/1.1 'Baloo 2','Trebuchet MS',system-ui,sans-serif}
+.rp-id{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5mm;margin-top:4mm}
+.rp-id>div{border:.3mm solid var(--line);border-radius:2.5mm;padding:2mm 3mm;min-width:0}
+.rp-id .w2{grid-column:span 2}
+.rp-id small{display:block;font-size:7pt;text-transform:uppercase;letter-spacing:.07em;color:var(--mut);font-weight:700}
+.rp-id b{font-size:11pt;overflow-wrap:anywhere}
+.rp-kpi{display:grid;grid-template-columns:repeat(5,1fr);gap:2.5mm;margin-top:4mm}
+.rp-kpi>div{border-radius:3mm;padding:2.8mm 3mm;background:#F1F7F4;border:.3mm solid var(--line)}
+.rp-kpi b{display:block;font:700 18pt/1 'Baloo 2','Trebuchet MS',system-ui,sans-serif;color:var(--g2)}
+.rp-kpi span{display:block;font-size:7.5pt;line-height:1.2;color:var(--mut);margin-top:1.2mm}
+.rp-kpi .hl{background:#0C4536;border-color:#0C4536}
+.rp-kpi .hl b{color:#fff}
+.rp-kpi .hl span{color:#CFE8DD}
+.rp-h{display:flex;align-items:baseline;justify-content:space-between;gap:4mm;margin:5mm 0 2mm;font:700 11.5pt 'Baloo 2','Trebuchet MS',system-ui,sans-serif;color:#0C4536}
+.rp-h small{font:400 8pt 'Atkinson Hyperlegible',system-ui,Arial,sans-serif;color:var(--mut)}
+.rp-pr{display:grid;grid-template-columns:30mm 1fr 52mm;align-items:center;gap:3mm;padding:1.5mm 0;border-bottom:.2mm solid var(--line)}
+.rp-pr .nm{font-weight:700;display:flex;align-items:baseline;gap:2.5mm}
+.rp-pr .ar{font-family:'Amiri','Noto Naskh Arabic',serif;font-size:12pt;color:var(--g);font-weight:400}
+.rp-pr .num{font-size:8pt;color:var(--mut);text-align:right;white-space:nowrap}
+.rp-pr .num b{color:var(--ink)}
+.rp-bar{display:flex;height:3.4mm;border-radius:99px;overflow:hidden;background:#E6EDEA}
+.rp-bar i{display:block;height:100%}
+.b1{background:#0A5C45}
+.b2{background:#6FC3A3}
+.b3{background:#B7C3BE}
+.rp-lg{display:flex;flex-wrap:wrap;gap:1mm 4mm;font-size:7.5pt;color:var(--mut);margin-top:1.5mm}
+.rp-lg i{display:inline-block;width:3mm;height:3mm;border-radius:.8mm;margin-right:1.2mm;vertical-align:-.5mm}
+.rp-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:1.2mm}
+.rp-cal .wd{text-align:center;font-size:7.5pt;font-weight:700;color:var(--mut)}
+.rp-d{height:11.5mm;border-radius:2mm;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;font-size:9pt;line-height:1.1;position:relative}
+.rp-d small{font-size:6.5pt;font-weight:400}
+.rp-d.miss{border:.25mm dashed #BFCBC6;color:#7C8C86;font-weight:400}
+.rp-d.fut{color:#B8C4BF;font-weight:400}
+.rp-d.l0{background:#EEF2F0}
+.rp-d.l1{background:#E4F4EC}
+.rp-d.l2{background:#BFE5D2}
+.rp-d.l3{background:#95D2B7}
+.rp-d.l4{background:#5DB993;color:#0B3328}
+.rp-d.l5{background:#0E7A5C;color:#fff}
+.rp-d .ng{position:absolute;top:1.2mm;right:1.2mm;width:2.1mm;height:2.1mm;border-radius:50%;background:#F2C230;border:.2mm solid #fff}
+.rp-note{margin-top:4mm;padding:3mm 4mm;border-radius:3mm;background:#FFF7DC;border:.3mm solid #F0DC96;font-size:9.5pt;line-height:1.45}
+.rp-note b{color:#7A5A00}
+.rp-mini{display:flex;justify-content:space-between;align-items:baseline;gap:4mm;padding:0 0 2mm;margin-bottom:3mm;border-bottom:.5mm solid #0C4536;font-size:9pt;color:var(--mut)}
+.rp-mini b{font:700 13pt 'Baloo 2','Trebuchet MS',system-ui,sans-serif;color:#0C4536}
+.rp-t{width:100%;border-collapse:collapse;font-size:8.5pt;table-layout:fixed}
+.rp-t th{background:#0C4536;color:#fff;padding:1.7mm 1mm;font-size:7.5pt;text-transform:uppercase;letter-spacing:.04em}
+.rp-t td{padding:.5mm 1.2mm;border-bottom:.2mm solid #DCE5E1;text-align:center;height:5.5mm;overflow:hidden}
+.rp-t td.l{text-align:left}
+.rp-t td.bc{font-size:8pt;white-space:nowrap;text-overflow:ellipsis}
+.rp-t tbody tr:nth-child(even) td{background:#F6FAF8}
+.rp-t tr{break-inside:avoid}
+.rp-t tfoot td{background:#E4F4EC;font-weight:700;border-top:.4mm solid #0C4536;height:6.5mm}
+.pj{display:inline-block;min-width:5mm;border-radius:99px;padding:.2mm 1.4mm;font-weight:700;font-size:7.5pt;line-height:1.35}
+.pj.j{background:#0A5C45;color:#fff}
+.pj.s{background:#BFE5D2;color:#0B3328}
+.pj.b{color:#9AA8A3;font-weight:400}
+.rp-key{margin-top:2mm;font-size:7.5pt;color:var(--mut)}
+.rp-date{margin-top:4mm;text-align:right;font-size:9pt;color:var(--mut)}
+.rp-sig{display:grid;grid-template-columns:1fr 1fr;gap:20mm;margin-top:3mm;text-align:center;font-size:9.5pt}
+.rp-sig .ln{height:15mm;border-bottom:.3mm solid #12302A;margin-bottom:1.5mm}
+.rp-sig b{display:block;min-height:5mm}
+.rp-ft{display:flex;justify-content:space-between;gap:4mm;margin-top:5mm;padding-top:2mm;border-top:.3mm solid var(--line);font-size:7.5pt;color:var(--mut)}
+</style>
 
 <div id="app"></div>
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
@@ -313,7 +425,8 @@ const IC={
   sun:'<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/>',
   sunlow:'<circle cx="12" cy="13" r="3.5"/><path d="M12 5v2M4.5 13h2M17.5 13h2M6.7 7.7l1.4 1.4M17.3 7.7l-1.4 1.4M3 20h18"/>',
   sunset:'<path d="M4 19h16M8 19a4 4 0 0 1 8 0M12 5v5M9.5 8 12 10.5 14.5 8"/>',
-  moon:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>'
+  moon:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
+  printer:'<path d="M6 9V3.5h12V9M6 18H4.5a1 1 0 0 1-1-1v-6a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2v6a1 1 0 0 1-1 1H18"/><rect x="6" y="14" width="12" height="7" rx="1"/>'
 };
 const ico=(n,s)=>'<svg width="'+(s||22)+'" height="'+(s||22)+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+IC[n]+'</svg>';
 const mark=(sz,id)=>'<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 64 64" aria-hidden="true"><defs><mask id="'+id+'"><rect width="64" height="64" fill="#fff"/><circle cx="39" cy="17" r="11" fill="#000"/></mask></defs><circle cx="31" cy="19" r="14" fill="var(--star)" mask="url(#'+id+')"/><path d="M6 36c9-4.5 17-4.5 26 0 9-4.5 17-4.5 26 0v19c-9-4.5-17-4.5-26 0-9-4.5-17-4.5-26 0z" fill="var(--accent)"/><path d="M32 36v19" stroke="var(--surface)" stroke-width="2.5"/></svg>';
@@ -706,6 +819,114 @@ function admHariHTML(){
     ${items?`<ul class="slist">${items}</ul>`:'<p class="muted pad center">Tidak ada siswa di daftar ini.</p>'}
     <p class="hint">Huruf S Z A M I berarti Subuh, Zuhur, Asar, Magrib, Isya. Warna terang berarti sendiri, warna penuh berarti berjamaah.</p>`;
 }
+/* ---------- laporan per siswa ---------- */
+function rptStats(h,key){
+  const p=key.split('-').map(Number),nd=daysIn(p[0],p[1]),cur=S.today.slice(0,7);
+  const elapsed=key>cur?0:key===cur?+S.today.slice(8,10):nd;
+  const per={};SHOLAT.forEach(x=>{per[x.k]={j:0,s:0,b:0};});
+  let filled=0,tot=0,jam=0,ng=0,full=0;
+  Object.keys(h).forEach(dd=>{
+    const e=h[dd];if(!e)return;
+    filled++;const c=cnt(e);tot+=c;if(c===5)full++;if(e.mengaji)ng++;
+    SHOLAT.forEach(x=>{
+      const v=(e.sholat&&e.sholat[x.k])|0;
+      if(v===2){per[x.k].j++;jam++;}else if(v===1)per[x.k].s++;else per[x.k].b++;
+    });
+  });
+  return{nd:nd,elapsed:elapsed,per:per,filled:filled,tot:tot,jam:jam,ng:ng,full:full,target:elapsed*5};
+}
+function slug(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'siswa';}
+function rptNote(st,nama){
+  if(!st.filled)return 'Belum ada jurnal yang diisi pada bulan ini. Mari membiasakan diri mengisi jurnal setiap hari dengan jujur.';
+  const pct=st.elapsed?Math.min(100,Math.round(st.filled*100/st.elapsed)):0;
+  const rate=st.tot/(st.filled*5);
+  let weak='',lo=1;
+  SHOLAT.forEach(x=>{const v=st.per[x.k],r=(v.j+v.s)/st.filled;if(r<lo){lo=r;weak=x.n;}});
+  let s='Ananda '+nama+' mengisi jurnal '+st.filled+' dari '+st.elapsed+' hari ('+pct+'%). Sholat terlaksana '+st.tot+' kali, '+st.jam+' di antaranya berjamaah, dan mengaji '+st.ng+' hari. ';
+  if(rate>=0.9&&pct>=80)s+='Alhamdulillah, kebiasaan baik ini sangat membanggakan. Pertahankan dan terus tingkatkan.';
+  else if(rate>=0.6)s+='Sudah baik. Tingkatkan lagi sholat berjamaah dan kebiasaan mengaji setiap hari'+(weak&&lo<0.8?', terutama sholat '+weak+'.':'.');
+  else s+='Mari terus bersemangat'+(weak?'. Sholat '+weak+' perlu mendapat perhatian lebih.':'.');
+  return s;
+}
+function reportPage(stu,key,h,idx){
+  const p=key.split('-').map(Number),nd=daysIn(p[0],p[1]);
+  const st=rptStats(h,key),pct=st.elapsed?Math.min(100,Math.round(st.filled*100/st.elapsed)):0;
+  const off=(new Date(p[0],p[1]-1,1).getDay()+6)%7;
+  const kelas=S.cfg.kelas||'',sek=S.cfg.sekolah||'',guru=S.cfg.guru||'';
+  const sub=[sek,kelas].filter(Boolean).join(' · ')||'Jurnal harian siswa';
+  let cal=['Sen','Sel','Rab','Kam','Jum','Sab','Min'].map(x=>'<span class="wd">'+x+'</span>').join('');
+  for(let i=0;i<off;i++)cal+='<span></span>';
+  for(let d=1;d<=nd;d++){
+    const dd=pad(d),date=key+'-'+dd,e=h[dd]||null;
+    if(e){const c=cnt(e);cal+='<span class="rp-d l'+c+'">'+d+'<small>'+c+'/5</small>'+(e.mengaji?'<i class="ng"></i>':'')+'</span>';}
+    else cal+='<span class="rp-d '+(date>S.today?'fut':'miss')+'">'+d+'</span>';
+  }
+  const ev=st.elapsed||1,w=n=>(n*100/ev).toFixed(1);
+  const prs=SHOLAT.map(x=>{
+    const v=st.per[x.k];
+    return '<div class="rp-pr"><span class="nm">'+x.n+'<span class="ar" lang="ar" dir="rtl">'+x.ar+'</span></span><span class="rp-bar"><i class="b1" style="width:'+w(v.j)+'%"></i><i class="b2" style="width:'+w(v.s)+'%"></i><i class="b3" style="width:'+w(v.b)+'%"></i></span><span class="num"><b>'+v.j+'</b> jamaah · <b>'+v.s+'</b> sendiri · <b>'+v.b+'</b> belum</span></div>';
+  }).join('');
+  let rows='';
+  for(let d=1;d<=nd;d++){
+    const dd=pad(d),date=key+'-'+dd,e=h[dd]||null,dt=parseYmd(date);
+    const cells=SHOLAT.map(x=>{
+      if(!e)return '<td></td>';
+      const v=(e.sholat&&e.sholat[x.k])|0;
+      return '<td><span class="pj '+(v===2?'j':v===1?'s':'b')+'">'+(v===2?'J':v===1?'S':'–')+'</span></td>';
+    }).join('');
+    rows+='<tr><td>'+d+'</td><td class="l">'+HARI[dt.getDay()]+'</td>'+cells+'<td>'+(e?(e.mengaji?'Ya':'–'):'')+'</td><td class="l bc">'+(e&&e.mengaji?esc(e.bacaan||''):'')+'</td></tr>';
+  }
+  const foot=SHOLAT.map(x=>'<td>'+(st.per[x.k].j+st.per[x.k].s)+'</td>').join('');
+  const ft='<footer class="rp-ft"><span>design by Akhmad Fitra Harry, S.Pd</span><span>Jurnal Sholat dan Mengaji · '+esc(sub)+'</span></footer>';
+  return '<article class="rp">'
+    +'<section class="rp-pg">'
+    +'<p class="rp-bis" lang="ar" dir="rtl">بسم الله الرحمن الرحيم</p>'
+    +'<header class="rp-ban"><span class="rp-mark">'+mark(44,'rm'+idx)+'</span><div><h1>Laporan Jurnal Sholat dan Mengaji</h1><p>'+esc(sub)+'</p></div><div class="rp-per"><small>Periode</small><b>'+bulanLabel(key)+'</b></div></header>'
+    +'<div class="rp-id"><div class="w2"><small>Nama siswa</small><b>'+esc(stu.nama)+'</b></div><div><small>NISN</small><b>'+esc(stu.nisn)+'</b></div><div class="w2"><small>Sekolah</small><b>'+esc(sek||'-')+'</b></div><div><small>Kelas</small><b>'+esc(kelas||'-')+'</b></div></div>'
+    +'<div class="rp-kpi"><div class="hl"><b>'+pct+'%</b><span>jurnal terisi ('+st.filled+' dari '+st.elapsed+' hari)</span></div><div><b>'+st.tot+'<small style="font-size:9pt;color:#5B726B">/'+st.target+'</small></b><span>sholat terlaksana</span></div><div><b>'+st.jam+'</b><span>sholat berjamaah</span></div><div><b>'+st.full+'</b><span>hari sholat lengkap 5 waktu</span></div><div><b>'+st.ng+'</b><span>hari mengaji</span></div></div>'
+    +'<div class="rp-h">Rincian per waktu sholat<small>dari '+st.elapsed+' hari berjalan</small></div>'+prs
+    +'<div class="rp-lg"><span><i class="b1"></i>Berjamaah</span><span><i class="b2"></i>Sendiri</span><span><i class="b3"></i>Belum</span><span><i style="background:#E6EDEA;border:.2mm solid #C9D3CF"></i>Tidak mengisi</span></div>'
+    +'<div class="rp-h">Kalender bulan ini<small>angka = jumlah sholat dari 5 · titik kuning = mengaji</small></div><div class="rp-cal">'+cal+'</div>'
+    +'<div class="rp-note"><b>Catatan: </b>'+esc(rptNote(st,stu.nama))+'</div>'
+    +ft+'</section>'
+    +'<section class="rp-pg">'
+    +'<div class="rp-mini"><span><b>Rincian harian</b> · '+esc(stu.nama)+'</span><span>'+bulanLabel(key)+'</span></div>'
+    +'<table class="rp-t"><colgroup><col style="width:9mm"><col style="width:19mm"><col style="width:14mm"><col style="width:14mm"><col style="width:14mm"><col style="width:14mm"><col style="width:14mm"><col style="width:14mm"><col></colgroup>'
+    +'<thead><tr><th>Tgl</th><th>Hari</th><th>Subuh</th><th>Zuhur</th><th>Asar</th><th>Magrib</th><th>Isya</th><th>Mengaji</th><th>Bacaan</th></tr></thead><tbody>'+rows+'</tbody>'
+    +'<tfoot><tr><td colspan="2">Jumlah</td>'+foot+'<td>'+st.ng+'</td><td></td></tr></tfoot></table>'
+    +'<p class="rp-key">J = berjamaah · S = sendiri · – = belum · kosong = tidak mengisi</p>'
+    +'<p class="rp-date">Dicetak pada '+tglPanjang(S.today)+'</p>'
+    +'<div class="rp-sig"><div><p>Orang tua / Wali</p><div class="ln"></div><b></b></div><div><p>Guru Kelas</p><div class="ln"></div><b>'+esc(guru)+'</b></div></div>'
+    +ft+'</section></article>';
+}
+const DOC_CSS='body{margin:0;background:#E7EDEA;font-family:system-ui,"Segoe UI",Roboto,Arial,sans-serif;overflow-x:auto}.bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:10px 16px;background:#0C4536;color:#fff;font-size:14px}.bar button{border:0;border-radius:99px;padding:10px 22px;font-weight:700;font-size:15px;background:#F2C230;color:#2A2000;cursor:pointer}.rp{background:#fff;margin:14px auto;padding:12mm;width:210mm;box-shadow:0 4px 22px rgba(0,0,0,.18)}.rp-pg+.rp-pg{border-top:2px dashed #C9D3CF;margin-top:10mm;padding-top:8mm}@media print{@page{size:A4;margin:12mm}.bar{display:none}body{background:#fff}.rp{margin:0;padding:0;width:186mm;box-shadow:none}.rp-pg+.rp-pg{border:0;margin:0;padding:0}}';
+function reportDoc(pages){
+  const css=($('#rpt-css')||{}).textContent||'';
+  return '<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Laporan Jurnal Sholat dan Mengaji</title>'
+    +'<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Atkinson+Hyperlegible:wght@400;700&family=Baloo+2:wght@600;700&display=swap">'
+    +'<style>'+css+DOC_CSS+'</style></head><body><div class="bar"><button type="button" onclick="window.print()">Cetak laporan</button><span>Pilih kertas A4, skala 100%, dan aktifkan Grafik latar belakang agar warna ikut tercetak.</span></div>'+pages+'</body></html>';
+}
+function printReport(which){
+  const A=S.adm,key=A.month,rec=A.months[key];
+  if(!rec||!rec.ready){toast('Data bulan ini belum selesai dimuat.',true);return;}
+  const list=which==='all'?A.roster:A.roster.filter(x=>x.nisn===which);
+  if(!list.length){toast('Belum ada siswa untuk dicetak.',true);return;}
+  const pages=list.map((x,i)=>reportPage(x,key,rec.data[x.nisn]||{},i)).join('');
+  if(S.standalone){
+    let root=$('#print-root');
+    if(!root){root=document.createElement('div');root.id='print-root';document.body.appendChild(root);}
+    root.innerHTML=pages;
+    window.addEventListener('afterprint',()=>{root.innerHTML='';},{once:true});
+    const go=()=>setTimeout(()=>window.print(),200);
+    (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(go,go);
+  }else if(S.downloads){
+    const fn='laporan-'+(which==='all'?'kelas':slug(list[0].nama))+'-'+key+'.html';
+    S.downloads.save({filename:fn,data:reportDoc(pages)}).then(
+      ()=>toast('Laporan diunduh. Buka berkasnya, lalu tekan Cetak laporan.'),
+      err=>{if(!err||err.code!=='declined')toast('Laporan belum bisa diunduh.',true);}
+    );
+  }else{toast('Cetak tidak tersedia di sini.',true);}
+}
 function admTabelHTML(rec,key,nd,p){
   const A=S.adm;
   let head='<tr><th class="nm" style="text-align:left;padding-left:12px">Nama</th>';
@@ -722,6 +943,13 @@ function admTabelHTML(rec,key,nd,p){
   }).join('');
   return `<div class="scroll"><table class="tbl"><thead>${head}</thead><tbody>${body}</tbody></table></div>`;
 }
+function rptBarsHTML(st){
+  const ev=st.elapsed||1;
+  return SHOLAT.map(x=>{
+    const v=st.per[x.k];
+    return `<div class="pbr"><span class="pbn"><b>${x.n}</b><span class="ar" lang="ar" dir="rtl">${x.ar}</span></span><span class="pbar" role="img" aria-label="${x.n}: berjamaah ${v.j}, sendiri ${v.s}, belum ${v.b}"><i class="j" style="width:${(v.j*100/ev).toFixed(1)}%"></i><i class="s" style="width:${(v.s*100/ev).toFixed(1)}%"></i><i class="b" style="width:${(v.b*100/ev).toFixed(1)}%"></i></span><small>${v.j} · ${v.s} · ${v.b}</small></div>`;
+  }).join('');
+}
 function admRekapHTML(){
   const A=S.adm,g=admGate();if(g)return g;
   const key=A.month,p=key.split('-').map(Number),nd=daysIn(p[0],p[1]),rec=A.months[key];
@@ -729,6 +957,8 @@ function admRekapHTML(){
   const n=A.roster.length;
   const stu=A.stu!=='all'?A.roster.find(x=>x.nisn===A.stu):null;
   if(A.stu!=='all'&&!stu)A.stu='all';
+  const canRpt=!!S.standalone||!!S.downloads;
+  const rlabel=S.standalone?'Cetak laporan':'Unduh laporan';
   const off=(new Date(p[0],p[1]-1,1).getDay()+6)%7;
   let cells='',filledDays=0,tot=0,ng=0;
   for(let i=0;i<off;i++)cells+='<span></span>';
@@ -752,29 +982,36 @@ function admRekapHTML(){
     }
     cells+=`<button class="${cls}" data-act="adm-day" data-date="${date}"${future?' disabled':''} aria-label="${label}">${inner}</button>`;
   }
+  const calHTML=`<div class="cal" style="margin-top:14px">${['Sen','Sel','Rab','Kam','Jum','Sab','Min'].map(x=>'<span class="wd">'+x+'</span>').join('')}${cells}</div>`;
   const cur=S.today.slice(0,7);
   const elapsed=key>cur?0:key===cur?+S.today.slice(8,10):nd;
-  const avg=elapsed?(filledDays/elapsed).toFixed(1).replace('.',','):'–';
-  const tiles=stu
-    ?[[filledDays+'/'+nd,'hari terisi'],[tot,'kali sholat'],[ng,'hari mengaji']]
-    :[[avg+'/'+n,'siswa mengisi per hari'],[tot,'kali sholat'],[ng,'kali mengaji']];
-  const legend=stu
-    ?'<span>Sholat:</span>'+[0,1,2,3,4,5].map(x=>'<span class="sw lv'+x+'">'+x+'</span>').join('')+'<span class="d ng" style="width:20px;height:20px;aspect-ratio:auto;background:none"></span><span>mengaji</span>'
-    :'<span>Siswa mengisi:</span><span>sedikit</span>'+[1,2,3,4,5].map(x=>'<span class="sw lv'+x+'"></span>').join('')+'<span>semua</span>';
+  let body;
+  if(stu){
+    const st=rptStats(rec.data[stu.nisn]||{},key);
+    const tiles=[[st.filled+'/'+st.elapsed,'hari terisi'],[st.tot+'/'+st.target,'kali sholat'],[st.jam,'berjamaah'],[st.ng,'hari mengaji']];
+    const legend='<span>Sholat:</span>'+[0,1,2,3,4,5].map(x=>'<span class="sw lv'+x+'">'+x+'</span>').join('')+'<span class="d ng" style="width:20px;height:20px;aspect-ratio:auto;background:none"></span><span>mengaji</span>';
+    body=`<div class="stu-head"><span class="avatar sm" aria-hidden="true">${esc(initials(stu.nama))}</span><div class="who"><h3>${esc(stu.nama)}</h3><small>NISN ${esc(stu.nisn)}</small></div><button class="btn ghost sm" data-act="adm-stu" data-n="all">Seluruh kelas</button></div>
+      <div class="sum auto">${tiles.map(x=>'<div><b>'+x[0]+'</b><span>'+x[1]+'</span></div>').join('')}</div>
+      <h3 class="subh">Per waktu sholat</h3><div>${rptBarsHTML(st)}</div>
+      <div class="legend"><span class="lgi"><i class="lg j"></i>Berjamaah</span><span class="lgi"><i class="lg s"></i>Sendiri</span><span class="lgi"><i class="lg b"></i>Belum</span><span class="lgi"><i class="lg n"></i>Tidak mengisi</span></div>
+      <h3 class="subh">Kalender</h3>${calHTML}<div class="legend">${legend}</div>
+      ${canRpt?`<button class="btn rbtn" data-act="rpt-print" data-n="${esc(stu.nisn)}">${ico('printer',20)} ${rlabel}</button>`:''}`;
+  }else{
+    const avg=elapsed?(filledDays/elapsed).toFixed(1).replace('.',','):'–';
+    const tiles=[[avg+'/'+n,'siswa mengisi per hari'],[tot,'kali sholat'],[ng,'kali mengaji']];
+    const legend='<span>Siswa mengisi:</span><span>sedikit</span>'+[1,2,3,4,5].map(x=>'<span class="sw lv'+x+'"></span>').join('')+'<span>semua</span>';
+    body=`<div class="sechead"><h3>Seluruh kelas</h3><span class="tag2">${n} siswa</span>${canRpt?`<button class="btn ghost sm" data-act="rpt-print" data-n="all">${ico('printer',18)} ${S.standalone?'Cetak semua':'Unduh semua'}</button>`:''}</div>
+      ${calHTML}<div class="sum">${tiles.map(x=>'<div><b>'+x[0]+'</b><span>'+x[1]+'</span></div>').join('')}</div><div class="legend">${legend}</div>`;
+  }
   const rows=A.roster.map(x=>{
     const h=rec.data[x.nisn]||{};let f=0,sum=0,gg=0;
     Object.keys(h).forEach(k=>{const e=h[k]||{};f++;sum+=cnt(e);if(e.mengaji)gg++;});
     const pct=Math.min(100,Math.round(f*100/nd));
-    return `<li><button class="srb${A.stu===x.nisn?' sel':''}" data-act="adm-stu" data-n="${esc(x.nisn)}" aria-pressed="${A.stu===x.nisn}"><span class="who"><b>${esc(x.nama)}</b><small>${f}/${nd} hari · rata-rata ${f?(sum/f).toFixed(1).replace('.',','):'–'} · mengaji ${gg}</small></span><span class="mini" role="img" aria-label="${pct}% hari terisi"><i style="width:${pct}%"></i></span></button></li>`;
+    return `<li class="srli${A.stu===x.nisn?' sel':''}"><button class="srb" data-act="adm-stu" data-n="${esc(x.nisn)}" aria-pressed="${A.stu===x.nisn}"><span class="who"><b>${esc(x.nama)}</b><small>${f}/${nd} hari · rata-rata ${f?(sum/f).toFixed(1).replace('.',','):'–'} · mengaji ${gg}</small></span><span class="mini" role="img" aria-label="${pct}% hari terisi"><i style="width:${pct}%"></i></span></button>${canRpt?`<button class="ibtn pr" data-act="rpt-print" data-n="${esc(x.nisn)}" aria-label="${rlabel} ${esc(x.nama)}" title="${rlabel}">${ico('printer',18)}</button>`:''}</li>`;
   }).join('');
   return `<div class="rk">
-    <section class="card calcard" id="adm-cal">
-      <div class="sechead"><h3>${stu?esc(stu.nama):'Seluruh kelas'}</h3>${stu?'<button class="btn ghost sm" data-act="adm-stu" data-n="all">Lihat seluruh kelas</button>':'<span class="tag2">'+n+' siswa</span>'}</div>
-      <div class="cal" style="margin-top:14px">${['Sen','Sel','Rab','Kam','Jum','Sab','Min'].map(x=>'<span class="wd">'+x+'</span>').join('')}${cells}</div>
-      <div class="sum">${tiles.map(x=>'<div><b>'+x[0]+'</b><span>'+x[1]+'</span></div>').join('')}</div>
-      <div class="legend">${legend}</div>
-    </section>
-    <section class="stack"><h3>Per siswa</h3><ul class="slist">${rows}</ul><p class="hint">Ketuk nama siswa untuk melihat kalendernya. Ketuk tanggal untuk melihat siapa yang mengisi pada hari itu.</p></section>
+    <section class="card calcard" id="adm-cal">${body}</section>
+    <section class="stack"><h3>Per siswa</h3><ul class="slist">${rows}</ul><p class="hint">Ketuk nama siswa untuk melihat rekapnya. Ketuk ikon printer untuk ${S.standalone?'mencetak':'mengunduh'} laporannya. Ketuk tanggal untuk melihat siapa yang mengisi pada hari itu.</p></section>
   </div>
   <details class="card det"><summary>Tabel lengkap per hari</summary>${admTabelHTML(rec,key,nd,p)}</details>`;
 }
@@ -941,6 +1178,7 @@ function act(a,b){
     case 'adm-del':A.confirm=b.dataset.n;paintAdmin();break;
     case 'adm-stu':{A.stu=b.dataset.n;paintAdmin();const c=$('#adm-cal');if(c)c.scrollIntoView({behavior:'smooth',block:'start'});break;}
     case 'adm-day':A.date=b.dataset.date;A.tab='hari';A.filter='semua';admStart();render();window.scrollTo(0,0);break;
+    case 'rpt-print':printReport(b.dataset.n);break;
     case 'adm-del-no':A.confirm=null;paintAdmin();break;
     case 'adm-del-yes':admHapus(b.dataset.n);break;
     case 'pick-csv':{const f=$('#f-csv');if(f)f.click();break;}
