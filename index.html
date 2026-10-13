@@ -3,6 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0C4536">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Jurnal Sholat">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>Jurnal Sholat dan Mengaji</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -294,7 +301,7 @@ textarea.f{resize:vertical;min-height:120px}
 .empty h3{font-size:1.2rem}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
-<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
+<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}.inst{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px;padding:12px 14px;border-radius:16px;background:var(--accent-soft);border:1px solid var(--line)}.inst-t{display:flex;flex-direction:column;gap:2px;font-size:.9rem}.inst-t span{color:var(--muted);font-size:.82rem}</style>
 </head>
 <body>
 <style id="rpt-css">
@@ -578,6 +585,7 @@ function loginHTML(){
       <div id="login-msg" class="msg" role="alert">${S.dbState==='none'?'Data belum bisa dimuat. Pastikan kamu sudah masuk ke akun dan punya akses.':''}</div>
       <button id="btn-login" class="btn" type="submit"${off?' disabled':''}>${S.dbState==='loading'?'Memuat…':'Masuk'}</button>
     </form>
+    <div id="install-slot"></div>
     <div id="adm-slot"></div>
     <p class="hint center">Isi jurnal setiap hari dengan jujur. Gurumu bisa melihat rekapnya.</p>
     <p class="credit">design by Akhmad Fitra Harry, S.Pd</p>
@@ -1190,6 +1198,7 @@ function act(a,b){
     case 'pin-reset':store.del('jsm-pin');toast('PIN dihapus. Buat PIN baru saat masuk sebagai guru berikutnya.');break;
     case 'pin-lupa':askLupa();break;
     case 'pin-batal':askPin();break;
+    case 'install':if(deferredInstall){deferredInstall.prompt();deferredInstall=null;paintInstall();}break;
   }
 }
 document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(b&&!b.disabled)act(b.dataset.act,b);});
@@ -1337,12 +1346,35 @@ function shareCard(){
   return '<div class="card stack"><h3>Membagikan ke siswa</h3><p>Bagikan tautan halaman ini ke siswa. Siswa perlu masuk ke akunnya dan diberi akses yang boleh mengisi (Contributor).</p><p>Siswa masuk memakai NISN yang kamu daftarkan di tab Siswa. NISN bukan kata sandi, jadi data cocok untuk kebiasaan harian kelas, bukan data rahasia.</p></div>';
 }
 
+
+/* ---------- pwa ---------- */
+let deferredInstall=null;
+const isStandaloneDisplay=()=>{try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;}catch(e){return false;}};
+const isIOS=()=>/iphone|ipad|ipod/i.test(navigator.userAgent)&&!window.MSStream;
+function paintInstall(){
+  const el=$('#install-slot');if(!el)return;
+  if(isStandaloneDisplay()){el.innerHTML='';return;}
+  if(deferredInstall){
+    el.innerHTML='<div class="inst"><div class="inst-t"><b>Pasang aplikasi</b><span>Buka dari layar utama HP, tanpa internet.</span></div><button class="btn sm" data-act="install">Pasang</button></div>';
+  }else if(isIOS()){
+    el.innerHTML='<div class="inst"><div class="inst-t"><b>Pasang aplikasi</b><span>Ketuk Bagikan, lalu Tambah ke Layar Utama.</span></div></div>';
+  }else el.innerHTML='';
+}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;paintInstall();});
+window.addEventListener('appinstalled',()=>{deferredInstall=null;paintInstall();});
+const _paintSlot=paintSlot;paintSlot=function(){_paintSlot();paintInstall();};
+function registerSW(){
+  if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){
+    window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});
+  }
+}
+
 /* ---------- start ---------- */
 async function init(){
   applyTheme(store.get('jsm-theme'));
   render();
   const c=window.claude;
-  if(!c||!c.use){S.standalone=true;S.db=localDB();S.downloads=fileDownloads();}
+  if(!c||!c.use){S.standalone=true;S.db=localDB();S.downloads=fileDownloads();registerSW();}
   else{
     try{S.db=await c.use('db');}catch(e){S.db=null;}
     try{S.user=await c.use('user');}catch(e){S.user=null;}
