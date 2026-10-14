@@ -1342,7 +1342,7 @@ function restoreBackup(file){
   r.readAsText(file);
 }
 function shareCard(){
-  if(S.standalone)return '<div class="card stack"><h3>Data dan PIN guru</h3><p>Data tersimpan di peramban perangkat ini saja. Guru dan siswa perlu memakai perangkat yang sama, misalnya satu laptop kelas. Untuk data bersama dari banyak perangkat, pakai versi di Claude.</p><p>Cadangkan data secara berkala. Menghapus data situs di peramban juga menghapus jurnal.</p><button class="btn ghost sm" data-act="bk-save">Unduh cadangan (JSON)</button><div><label for="f-restore" style="margin-top:0">Pulihkan dari cadangan</label><input id="f-restore" class="f" type="file" accept=".json,application/json"></div><button class="btn ghost sm" data-act="pin-reset">Ganti PIN guru</button></div>';
+  if(S.standalone)return '<div class="card stack"><h3>Data dan PIN guru</h3><p>Cadangkan data secara berkala. Menghapus data situs di peramban juga menghapus jurnal.</p><button class="btn ghost sm" data-act="bk-save">Unduh cadangan (JSON)</button><div><label for="f-restore" style="margin-top:0">Pulihkan dari cadangan</label><input id="f-restore" class="f" type="file" accept=".json,application/json"></div><button class="btn ghost sm" data-act="pin-reset">Ganti PIN guru</button></div>';
   return '<div class="card stack"><h3>Membagikan ke siswa</h3><p>Bagikan tautan halaman ini ke siswa. Siswa perlu masuk ke akunnya dan diberi akses yang boleh mengisi (Contributor).</p><p>Siswa masuk memakai NISN yang kamu daftarkan di tab Siswa. NISN bukan kata sandi, jadi data cocok untuk kebiasaan harian kelas, bukan data rahasia.</p></div>';
 }
 
